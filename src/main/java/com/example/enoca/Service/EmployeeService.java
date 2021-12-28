@@ -31,6 +31,7 @@ public class EmployeeService {
     }
 
     public void deleteById(int id) {
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employeeRepository.deleteById(id);
     }
 }
