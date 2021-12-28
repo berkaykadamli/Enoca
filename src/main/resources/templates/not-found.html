@@ -18,25 +18,13 @@
     <span class="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-center text-decoration-none">Employee List</span>
     <a th:href="@{'/'}" class="btn btn-outline-info">Go Back Company List</a>
     <a th:href="@{'/employee/add/'+ ${id} }" class="btn btn-outline-info">Add Employee </a>
-
-
 </header>
 <div class="row">
 
-    <th:block th:each="employee : ${listEmployees}">
-        <div class="col-sm-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${employee.name +' '+ employee.surname}"></h5>
-                    <p class="card-text">Email : <span th:text="${employee.email} "></span><br>
-                    Salary : <span th:text="${employee.salary}"></span> </p>
-                    <a th:href="@{'/employee/edit/'+${employee.id}+'/company/'+${id}}" class="btn btn-outline-success">Edit</a>
-                    <a th:href="@{ '/'+${id} +'/employee/delete/'+${employee.id}}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    </th:block>
-
+    <p>Error is :
+        <span th:text="${error}"></span>
+        , You can go back
+    </p>
 </div>
 
 

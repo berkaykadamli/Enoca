@@ -23,8 +23,8 @@ class LoadDatabase {
             if(companyRepository.findAll().size() == 0) {
                 Company company = new Company("Enoca","enoca.com","Karabük");
                 Employee berkay = new Employee("Berkay", "Kadamlı", 4250,"berkaykadamli@gmail.com");
-                Employee frado = new Employee("John", "Doe", 1,"johndoe@gmail.com");
-                company.setEmployees(Arrays.asList(berkay, frado));
+                Employee john = new Employee("John", "Doe", 1,"johndoe@gmail.com");
+                company.setEmployees(Arrays.asList(berkay, john));
                 log.info("Preloading " + companyRepository.save(company));
             }
 

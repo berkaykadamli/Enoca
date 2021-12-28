@@ -37,10 +37,7 @@ public class CompanyService {
             cmp.setLocation(company.getLocation());
             cmp.setWebsite(company.getWebsite());
             return companyRepository.save(cmp);
-        }).orElseGet(() -> {
-            company.setId(id);
-            return companyRepository.save(company);
-        });
+        }).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
 }

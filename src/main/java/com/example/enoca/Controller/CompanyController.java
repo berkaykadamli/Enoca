@@ -1,6 +1,7 @@
 package com.example.enoca.Controller;
 
 
+import com.example.enoca.Exception.CompanyNotFoundException;
 import com.example.enoca.Model.Company;
 import com.example.enoca.Service.CompanyService;
 import lombok.RequiredArgsConstructor;
@@ -28,20 +29,34 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
     }
 
-
     @PostMapping("/company/save")
     public ResponseEntity<Company> save(@RequestBody Company company) {
         return new ResponseEntity<>(companyService.save(company),HttpStatus.OK);
     }
 
     @PutMapping("/company/{id}")
-    public Company update(@RequestBody Company company, @PathVariable int id) {
-        return companyService.update(company, id);
+    public ResponseEntity<String> update(@RequestBody Company company, @PathVariable int id) {
+        try {
+            companyService.update(company, id);
+            return new ResponseEntity<String>(company.getName()+" has updated !",HttpStatus.OK);
+        }
+        catch (Exception e){
+            log.info(e.getMessage());
+            return new ResponseEntity<String>(new CompanyNotFoundException(id).getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/company/delete/{id}")
-    public void delete(@PathVariable int id) {
-        companyService.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        try{
+            Company company=companyService.findById(id);
+            companyService.deleteById(id);
+            return new ResponseEntity<String>(company.getName()+" has deleted !",HttpStatus.OK);
+        }
+        catch (Exception e){
+            log.info(e.getMessage());
+            return new ResponseEntity<String>(new CompanyNotFoundException(id).getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

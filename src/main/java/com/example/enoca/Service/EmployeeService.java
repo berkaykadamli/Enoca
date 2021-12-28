@@ -1,5 +1,6 @@
 package com.example.enoca.Service;
 
+import com.example.enoca.Exception.EmployeeNotFoundException;
 import com.example.enoca.Model.Employee;
 import com.example.enoca.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,11 @@ public class EmployeeService {
     }
 
     public Employee findById(int id) {
-        return employeeRepository.findById(id);
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
-    public Employee update(Employee employee, int id) {
-        Employee oldEmployee = employeeRepository.findById(id);
-        oldEmployee.setName(employee.getName());
-        oldEmployee.setSurname(employee.getSurname());
-        oldEmployee.setEmail(employee.getEmail());
-        oldEmployee.setCompany(employee.getCompany());
-        oldEmployee.setSalary(employee.getSalary());
-
-        return employeeRepository.save(oldEmployee);
+    public Employee update(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
     public void deleteById(int id) {
